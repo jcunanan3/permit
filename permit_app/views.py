@@ -49,6 +49,9 @@ def permit_application(request):
         if form.is_valid():
             permit_form = form.save(commit=False)
             if permit_form:
+                # You could do this before saving the form the first time. Something like:
+                # form['user'] = request.user
+                # permit_form = form.save()
                 permit_form.user = request.user
                 permit_form.save()
                 # email staff
@@ -63,7 +66,7 @@ def permit_application(request):
         data = {'form': form}
     return render(request, "permit_application.html",data)
 
-
+# This function should NOT be in your views file. It should live in your models.
 def staff_check(user):
     return user.MTA_staff
 
@@ -129,6 +132,8 @@ def view_map(request):
 def view_map_info(request):
     permits = Permit.objects.order_by("-date")
     response_array = []
+    # There's no reason to route this through your Django views (that's slow, because the client has to wait for
+    # a roundtrip to the server). You should be able to do all this with AJAX.
     for i in permits:
         location=i.street_address+",San Francisco,CA"
         response = requests.get('https://maps.googleapis.com/maps/api/geocode/json?address='+location+'&key=AIzaSyBukXf80UEFP8KYbO4GGC729nHJCMdU-30')
