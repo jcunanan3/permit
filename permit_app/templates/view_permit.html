@@ -1,0 +1,6 @@
+{% extends "base_template.html" %}
+
+{% block content %}
+    {% csrf_token %}
+    <p>{{ permit.date }} {{ permit.street_address }}  {{ permit.zip }} {{ permit.resident_comments }}  {{ permit.user }}  {{ permit.MTA_comments }}</p>
+{% endblock %}

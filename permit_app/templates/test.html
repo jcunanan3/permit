@@ -1,0 +1,7 @@
+{% extends "base_template.html" %}
+
+{% block content %}
+    {% for i in staff_users %}:
+        <p>{{ i.username}} {{i.email}} {{i.MTA_staff }}</p>
+    {% endfor %}
+{% endblock %}

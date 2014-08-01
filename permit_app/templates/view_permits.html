@@ -1,0 +1,35 @@
+{% extends "base_template.html" %}
+
+{% block content %}
+
+    <h3>View and update permits</h3>
+    <table class="table table-bordered">
+
+        <ol>
+        <th>date</th>
+            <th>address</th>
+            <th>user</th><th>resident comments</th><th>MTA comments</th><th>approved?</th><th>rejected?</th>
+        {% for permit in permits %}
+
+                {% csrf_token %}
+                <tr>
+                <td><a href="{% url "edit_permit" permit.id %}"> {{ permit.date }} </a> </td><td>  {{ permit.street_address }}</td> <td>{{ permit.user }} </td> <td> {{ permit.resident_comments }} </td> <td> {{ permit.MTA_comments }}</td> <td> {{permit.approved }} </td> <td> {{ permit.rejected }}</td>
+
+                </tr>
+
+        {% endfor %}
+        </ol>
+        </table>
+
+
+{#        {%  for i in response_array %}#}
+{##}
+{#            {%  for j in i.results %}#}
+{#                {{ j.geometry.location.lat }}#}
+{#                {{ j.geometry.location.lng }}#}
+{#            {% endfor %}#}
+{#            <p>--</p>#}
+{#        {% endfor %}#}
+
+{#    <a href="{% url "home" %}">Home</a>#}
+{% endblock %}

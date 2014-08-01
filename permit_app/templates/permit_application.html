@@ -1,0 +1,27 @@
+{% extends "base_template.html" %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+{#    {% load crispy_forms_tags %}#}
+{#    {% crispy form %}#}
+    <form method="post">
+        <p>Welcome {{ user.username }}. Please fill out the form below. After you fill out the form, press the "pay with card" button BEFORE you hit "submit" and send the form.</p>
+        {% csrf_token %}
+        <form action="/charge/" method="POST">
+      <script
+        src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+        data-key="pk_test_6pRNASCoBOKtIshFeQd4XMUh"
+        data-amount="16300"
+        data-name="Demo Site"
+        data-description="Parking Permit ($163.00)"
+        data-image="http://www.sfmta.com/sites/all/themes/sfmta/img/sfmta-logo.png">
+      </script>
+    </form>
+        {{ form | crispy  }}
+
+        <input type="submit" value="Submit">
+    </form>
+
+
+{% endblock %}
