@@ -5,6 +5,7 @@ from permit_app.helpers import get_lat_lng
 
 # Create your models here.
 class PermitUser(AbstractUser):
+    # Why do users have address fields? Do we care, or do we only care about the Permit address fields?
     phone = models.CharField(max_length=12, help_text="Format should be: 415-111-2222")
     address_1 = models.CharField(("address1"),max_length=128)
     address_2 = models.CharField(("address2"),max_length=128, blank=True)
@@ -20,6 +21,8 @@ class Permit(models.Model):
     state = models.CharField(max_length=2,default="CA")
     zip = models.IntegerField()
     date = models.DateField()
+    # By having both `approved` and `rejected` fields, a permit could be both approved and rejected, which
+    # doesn't make a lot of sense
     approved = models.BooleanField(default=False)
     rejected = models.BooleanField(default=False)
     user = models.ForeignKey(PermitUser)
